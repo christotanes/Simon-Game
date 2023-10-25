@@ -68,10 +68,12 @@ let startGame = async () => {
     document.getElementById('start').style.display = "none";
     document.getElementById('level-title').style.display = "none";
     document.getElementById('level-lose').style.color = "#FEF2BF";
+    playerAnswer.length = 0;
+    correctSequence.length = 0;
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i <= 25; i++) {
         console.log(i);
-
+        
         // shows level or iteration of sequence   
         document.getElementById('level-lose').textContent = `Level ${i+1}`;
 
@@ -82,7 +84,7 @@ let startGame = async () => {
 
         // resets player's array where buttons pressed are stored
         playerAnswer.length = 0;
-        console.log(playerAnswer)
+        console.log(playerAnswer);
 
         await sleep(1);
         if (correctSequence[i] == green) {
@@ -93,34 +95,70 @@ let startGame = async () => {
             yellowSet.playYellow();
         } else if (correctSequence[i] == blue) {
             blueSet.playBlue();
-        }
+        };
 
-        greenSelect.addEventListener("click", () => {
+        document.querySelector('.timer-bar').style.animationName = "growCounter";
+
+        greenSelect.addEventListener("click", (event) => {
             event.stopImmediatePropagation();
             greenSet.playGreen();
             playerAnswer.push(green);
         });
 
-        redSelect.addEventListener("click", () => {
+        redSelect.addEventListener("click", (event) => {
             event.stopImmediatePropagation();
             redSet.playRed();
             playerAnswer.push(red);
         });
 
-        yellowSelect.addEventListener("click", () => {
+        yellowSelect.addEventListener("click", (event) => {
             event.stopImmediatePropagation();
             yellowSet.playYellow();
             playerAnswer.push(yellow);
         }); 
 
-        blueSelect.addEventListener("click", () => {
+        blueSelect.addEventListener("click", (event) => {
             event.stopImmediatePropagation();
             blueSet.playBlue();
             playerAnswer.push(blue);
         });
-        console.log(playerAnswer);
 
-        await sleep(5);
+        // Will listen for key press and do its corresponding function
+        document.addEventListener('keydown', function(event) {
+            event.stopImmediatePropagation();
+            if (event.key == 'w') {
+                greenSet.playGreen();
+                playerAnswer.push(green);
+            } else if (event.key == 'a') {
+                redSet.playRed();
+                playerAnswer.push(red);
+            } else if (event.key == 's') {
+                yellowSet.playYellow();
+                playerAnswer.push(yellow);
+            } else if (event.key == 'd') {
+                blueSet.playBlue();
+                playerAnswer.push(blue);
+            }
+        });
+
+        console.log(playerAnswer);
+        // Checks level and decreases sleep timer as well as countdown and growCounter duration
+        let counterTime = (i) => {
+            if (i+1 > 0 && i < 5) {
+                return counterTime = 20;
+            } else if (i >= 5 && i < 10) {
+                return counterTime = 15;
+            } else if (i >= 10 && i <= 15) {
+                return counterTime = 10;
+            } else if (i > 15) {
+                return counterTime = 5;
+            }
+        };
+        console.log(counterTime(i))
+
+        await sleep(counterTime);
+        document.querySelector('.timer-bar').style.animationName = "";
+        document.querySelector('.timer-bar').style.animationDuration = "counterTime()";
         console.log(playerAnswer);
         console.log(correctSequence.toString());
         console.log(playerAnswer.toString())
@@ -133,11 +171,15 @@ let startGame = async () => {
             document.getElementById('level-lose').style.color = "#f70505";
             document.getElementById('level-lose').textContent = `Game Over! You reached Level ${i+1}!`;
             break;
+        } else if (correctSequence.toString() === playerAnswer.toString() && i === 25) {
+            document.querySelector('.container').style.display = "none";
+            document.getElementById('start').style.display = "block";
+            document.getElementById('level-title').style.display = "block";
+            document.getElementById('level-lose').style.color = "#f70505";
+            document.getElementById('level-lose').textContent = `You completed the Game! You reached Level ${i+1}!`;
+            break;
         } else { () => {
             return playerAnswer.forEach(playerAnswer.pop())};
         };
-    }
+    };
 };
-// playerAnswer.push(answer);
-// console.log(playerAnswer.toString());
-// console.log(correctSequence.toString())

@@ -1,17 +1,23 @@
+* {
+  font-family: 'Tilt Neon', sans-serif;
+}
+
 body {
   text-align: center;
   background-color: #011F3F;
 }
 
-#level-title {
-  font-family: 'Tilt Neon', sans-serif;
+#level-title, .playButton {
   font-size: 3rem;
   margin:  5%;
   color: #FEF2BF;
 }
 
+.playButton{
+  margin-top: 30% !important;
+}
+
 #level-lose {
-  font-family: 'Tilt Neon', sans-serif;
   font-size: 4rem;
   margin:  5%;
   color: #f70505;
@@ -21,7 +27,6 @@ body {
   display: none;
   width: 50%;
   margin: auto;
-
 }
 
 .btn {
@@ -64,4 +69,22 @@ body {
   margin: auto;
   font-size: 3.5rem;
   color: blue;
+}
+
+@keyframes growCounter {
+  from {
+    width: 0px;
+}
+
+to {
+    width: 100%;
+}
+}
+
+.timer-bar {
+  height: 2px;
+  width: 1px;
+  background-color: #f70505;
+  
+  animation-duration: 20s;
 }

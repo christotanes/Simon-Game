@@ -13,26 +13,29 @@
 <body>
     <h1 id="level-title">Press Button to Start</h1>
     <h1 id="level-lose"></h1>
+    
     <button type="button" id="start" class="btn" onclick="startGame()">Start Game</button>
     <div class="container">
+      <div class="timer-bar"></div>
     <div class="row">
 
       <div type="button" id="green" class="btn green">
+        <div id="wButton" class="playButton">W</div>
 
       </div>
 
       <div type="button" id="red" class="btn red">
-
+        <div id="aButton" class="playButton">A</div>
       </div>
     </div>
 
     <div class="row">
 
       <div type="button" id="yellow" class="btn yellow">
-
+        <div id="sButton" class="playButton" style="color: black">S</div>
       </div>
       <div type="button" id="blue" class="btn blue">
-
+        <div id="dButton" class="playButton">D</div>
       </div>
 
     </div>
