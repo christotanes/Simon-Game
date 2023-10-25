@@ -10,6 +10,13 @@ body {
   color: #FEF2BF;
 }
 
+#level-lose {
+  font-family: 'Tilt Neon', sans-serif;
+  font-size: 4rem;
+  margin:  5%;
+  color: #f70505;
+}
+
 .container {
   display: none;
   width: 50%;
