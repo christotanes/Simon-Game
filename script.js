@@ -205,3 +205,26 @@ let startGame = async () => {
         };
     };
 };
+
+var unmute = document.getElementById('start');
+unmute.addEventListener('click', unlock);
+
+function unlock() {
+  console.log("unlocking")
+  // create empty buffer and play it
+  var buffer = context.createBuffer(1, 1, 22050);
+  var source = context.createBufferSource();
+  source.buffer = buffer;
+  source.connect(context.destination);
+
+  // play the file. noteOn is the older version of start()
+  source.start ? source.start(0) : source.noteOn(0);
+
+  // by checking the play state after some time, we know if we're really unlocked
+  setTimeout(function() {
+    if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
+      // Hide the unmute button if the context is unlocked.
+      unmute.style.display = "none";
+    }
+  }, 0)
+};
