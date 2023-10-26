@@ -86,6 +86,7 @@ let startGame = async () => {
     startSelect.style.display = "none";
     titleSelect.style.display = "none";
     levelLoseSelect.style.color = "#FEF2BF";
+    document.getElementById('instruction').style.display = "none";
     playerAnswer.length = 0;
     correctSequence.length = 0;
 
@@ -142,22 +143,23 @@ let startGame = async () => {
         });
 
         // Will listen for key press and do its corresponding function
-        document.addEventListener('keydown', function(event) {
-            event.stopImmediatePropagation();
-            if (event.key == 'w') {
-                greenSet.playGreen();
-                playerAnswer.push(green);
-            } else if (event.key == 'a') {
-                redSet.playRed();
-                playerAnswer.push(red);
-            } else if (event.key == 's') {
-                yellowSet.playYellow();
-                playerAnswer.push(yellow);
-            } else if (event.key == 'd') {
-                blueSet.playBlue();
-                playerAnswer.push(blue);
-            }
-        });
+        // Commented out to test scroll responsiveness
+        // document.addEventListener('keydown', function(event) {
+        //     event.stopImmediatePropagation();
+        //     if (event.key == 'w') {
+        //         greenSet.playGreen();
+        //         playerAnswer.push(green);
+        //     } else if (event.key == 'a') {
+        //         redSet.playRed();
+        //         playerAnswer.push(red);
+        //     } else if (event.key == 's') {
+        //         yellowSet.playYellow();
+        //         playerAnswer.push(yellow);
+        //     } else if (event.key == 'd') {
+        //         blueSet.playBlue();
+        //         playerAnswer.push(blue);
+        //     }
+        // });
 
         console.log(playerAnswer);
         // Checks level and decreases sleep timer as well as countdown and growCounter duration
@@ -189,6 +191,7 @@ let startGame = async () => {
             document.querySelector('.instruction-size').style.display = "none";
             startSelect.style.display = "block";
             titleSelect.style.display = "block";
+            document.getElementById('instruction').style.display = "block";
             levelLoseSelect.style.color = "#f70505";
             levelLoseSelect.textContent = `Game Over! You reached Level ${i+1}!`;
             break;
@@ -197,6 +200,7 @@ let startGame = async () => {
             document.querySelector('.instruction-size').style.display = "none";
             startSelect.style.display = "block";
             titleSelect.style.display = "block";
+            document.getElementById('instruction').style.display = "block";
             levelLoseSelect.style.color = "#f70505";
             levelLoseSelect.textContent = `You completed the Game! You reached Level ${i+1}!`;
             break;
@@ -207,7 +211,7 @@ let startGame = async () => {
 };
 
 var unmute = document.getElementById('start');
-unmute.addEventListener('click', unlock);
+unmute.addEventListener('click', unlock());
 
 function unlock() {
   console.log("unlocking")
