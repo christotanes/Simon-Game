@@ -18,7 +18,7 @@ body {
   flex-direction: column;
 }
 
-#level-title, .playButton {
+#level-title {
   font-size: 3rem;
   margin:  3rem 5%;
 }
@@ -60,7 +60,7 @@ body {
   margin: 0 auto;
 }
 
-.btn {
+.row div, .btn {
   margin: 25px;
   display: inline-block;
   height: 200px;
@@ -105,20 +105,28 @@ body {
 @keyframes growCounter {
   from {
     width: 0px;
+    font-size: 1rem;
 }
 to {
     width: 100%;
+    font-size: 3rem;
 }
 }
 
 .timer-bar {
-  height: 1rem;
+  height: 1.2rem;
+  font-size: 1rem;
   width: 0;
   background-color: #f70505;
   margin-top: 1rem;
-  text-align: end;
   animation-duration: 20s;
   animation-timing-function: linear;
+  transform: translateY(-50%);
+}
+
+.timer-text{
+  text-align: end;
+  transform: translateY(-30%);
 }
 
 @keyframes slideFromLeft {
@@ -180,7 +188,7 @@ a:active {
     background-color: #00346c;
   }
 
-  #level-title, .playButton {
+  #level-title {
     font-size: 2rem;
     margin:  2rem 5%;
   }
@@ -191,7 +199,7 @@ a:active {
     color: #f70505;
   }
 
-  .btn {
+  .row div, .btn {
     margin: 1rem 10px 10px;
     height: 200px;
     width: 200px;
@@ -203,17 +211,6 @@ a:active {
   }
 }
 
-@media all and (max-width: 330px){
-  .description {
-    width: 75vw;
-    background-color: #00346c;
-  }
-  #level-title, .playButton {
-    font-size: 2rem;
-    margin:  2rem 5% 1rem 5%;
-  }
-}
-
 @media all and (max-width: 500px){
   .container {
     width: 100%;
@@ -221,10 +218,44 @@ a:active {
   #start {
     font-size: 3rem
   }
-  .btn {
-    margin: 1rem auto 10px;
-    height: 45%;
-    width: 45%;
+  .row div, .btn {
+    margin:  1rem 5px 1rem;
+    height: 55%;
+    width: 40%;
     border: 10px solid black;
+  }
+  .row div {
+    padding: 4rem;
+  }
+
+  @keyframes slideFromLeft {
+    from {
+      transform: translateX(-300px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+@media all and (max-width: 330px){
+  .description {
+    width: 75vw;
+    background-color: #00346c;
+  }
+  #level-title {
+    font-size: 2rem;
+    margin:  2rem 5% 1rem 5%;
+  }
+  #start {
+    font-size: 2rem;
+  }
+  @keyframes slideFromLeft {
+    from {
+      transform: translateX(-250px);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 }

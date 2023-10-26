@@ -17,6 +17,7 @@ const green = 1,
     audioYellow = new Audio ('./sounds/yellow.mp3'), 
     audioBlue = new Audio ('./sounds/blue.mp3'), 
     audioWrong = new Audio ('./sounds/wrong.mp3'),
+    audioCorrect = new Audio('./sounds/correct.mp3'),
     titleSelect = document.getElementById('level-title'),
     containerSelect = document.querySelector('.container'),
     startSelect = document.getElementById('start'),
@@ -24,6 +25,11 @@ const green = 1,
     timerBarSelect = document.querySelector('.timer-bar'),
     infoSelect = document.querySelector('.info');
 
+// code to allow audio to play on iOS without user interaction
+const soundEffect = new Audio();
+soundEffect.autoplay = true;
+soundEffect.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+    
 // Will show description
 infoSelect.addEventListener('click', () => {
     document.querySelector('.description').style.display = "block";
@@ -78,7 +84,7 @@ let blueSet = {
 };
 
 // Sleep setting ONLY works for async functions, user can input, while function waits. Takes seconds but will be multiplied with milliseconds for proper seconds output
-const sleep = (delaySeconds) => new Promise((resolve) => setTimeout(resolve, delaySeconds * 1000))
+const sleep = (delaySeconds) => new Promise((resolve) => setTimeout(resolve, delaySeconds * 1000));
 
 // Starts Game
 let startGame = async () => {
@@ -87,10 +93,39 @@ let startGame = async () => {
     titleSelect.style.display = "none";
     levelLoseSelect.style.color = "#FEF2BF";
     document.getElementById('instruction').style.display = "none";
+    greenSet.muted = !greenSet.muted;
+    redSet.muted = !redSet.muted;
+    yellowSet.muted = !yellowSet.muted;
+    blueSet.muted = !blueSet.muted;
     playerAnswer.length = 0;
     correctSequence.length = 0;
 
     for (let i = 0; i <= 25; i++) {
+        // Checks level and decreases sleep timer as well as countdown and growCounter duration
+        let counterTime = 0, 
+            earlyCounter = 0,
+            countdown = 0;
+        if (i+1 > 0 && i < 3) {
+            countdown = 20;
+            counterTime = 16;
+            earlyCounter = 4;
+        } else if (i >= 3 && i < 5) {
+            countdown = 20;
+            counterTime = 14;
+            earlyCounter = 6;
+        } else if (i >= 5 && i < 10) {
+            countdown = 15;
+            counterTime = 8;
+            earlyCounter = 7;
+        } else if (i >= 10 && i <= 15) {
+            countdown = 10;
+            counterTime = 2;
+            earlyCounter = 8;
+        } else if (i > 15) {
+            countdown = 5;
+            counterTime = 1;
+            earlyCounter = 4;
+        };
         console.log(i);
         
         // shows level or iteration of sequence   
@@ -103,21 +138,29 @@ let startGame = async () => {
 
         // resets player's array where buttons pressed are stored
         playerAnswer.length = 0;
-        console.log(playerAnswer);
-
+        // console.log(playerAnswer);
+          
         await sleep(1);
         if (correctSequence[i] == green) {
-            greenSet.playGreen();
+            // greenSet.playGreen();
+            soundEffect.src = "./sounds/green.mp3";
         } else if (correctSequence[i] == red) {
-            redSet.playRed();
+            // redSet.playRed();
+            soundEffect.src = "./sounds/red.mp3";
         } else if (correctSequence[i] == yellow) {
-            yellowSet.playYellow();
+            // yellowSet.playYellow();
+            soundEffect.src = "./sounds/yellow.mp3";
         } else if (correctSequence[i] == blue) {
-            blueSet.playBlue();
+            // blueSet.playBlue();
+            soundEffect.src = "./sounds/blue.mp3";
         };
 
-        timerBarSelect.style.animationName = "growCounter";
-
+        let myInterval = setInterval(function countdownTimer() {
+            countdown -= 1;
+            document.querySelector('.timer-text').textContent = countdown;
+            console.log(countdown);
+        }, 1000);
+        
         greenSelect.addEventListener("click", (event) => {
             event.stopImmediatePropagation();
             greenSet.playGreen();
@@ -161,31 +204,51 @@ let startGame = async () => {
         //     }
         // });
 
-        console.log(playerAnswer);
-        // Checks level and decreases sleep timer as well as countdown and growCounter duration
-        let counterTime = (i) => {
-            if (i+1 > 0 && i < 5) {
-                return counterTime = 20;
-            } else if (i >= 5 && i < 10) {
-                return counterTime = 15;
-            } else if (i >= 10 && i <= 15) {
-                return counterTime = 10;
-            } else if (i > 15) {
-                return counterTime = 5;
-            }
+        timerBarSelect.style.animationName = "growCounter";
+        timerBarSelect.style.animationDuration = "countdown";
+        console.log(correctSequence);
+        console.log(counterTime);
+
+        await sleep(earlyCounter);
+        if (playerAnswer.length != i+1 && playerAnswer.length != 0 && correctSequence.toString() === playerAnswer.toString()){
+            clearInterval(myInterval);
+            audioCorrect.play();
+            console.log(playerAnswer);
+            timerBarSelect.style.animationName = "";
+            continue;
+        } else if (correctSequence.toString() === playerAnswer.toString()) {
+            clearInterval(myInterval);
+            audioCorrect.play();
+            console.log(playerAnswer);
+            timerBarSelect.style.animationName = "";
+            continue;
+        } else if (playerAnswer.length == 0){
+            console.log("Must continue");
+        } else if (correctSequence.toString() != playerAnswer.toString()) {
+            clearInterval(myInterval);
+            audioWrong.play();
+            console.log(playerAnswer);
+            containerSelect.style.display = "none";
+            document.querySelector('.instruction-size').style.display = "none";
+            startSelect.style.display = "block";
+            titleSelect.style.display = "block";
+            document.getElementById('instruction').style.display = "block";
+            levelLoseSelect.style.color = "#f70505";
+            levelLoseSelect.textContent = `Game Over! You reached Level ${i+1}!`;
+            break;
+        } else {
+            console.log("must continue");
         };
-        console.log(counterTime(i))
 
         await sleep(counterTime);
-
         timerBarSelect.style.animationName = "";
-        timerBarSelect.style.animationDuration = "counterTime()";
         console.log(playerAnswer);
         console.log(correctSequence.toString());
-        console.log(playerAnswer.toString())
+        console.log(playerAnswer.toString());
 
         // If statement will check both arrays in strings and see if will loop again or show player GameOver with level reached in i+1
         if (correctSequence.toString() != playerAnswer.toString()) {
+            clearInterval(myInterval);
             audioWrong.play();
             containerSelect.style.display = "none";
             document.querySelector('.instruction-size').style.display = "none";
@@ -196,6 +259,7 @@ let startGame = async () => {
             levelLoseSelect.textContent = `Game Over! You reached Level ${i+1}!`;
             break;
         } else if (correctSequence.toString() === playerAnswer.toString() && i === 25) {
+            clearInterval(myInterval);
             containerSelect.style.display = "none";
             document.querySelector('.instruction-size').style.display = "none";
             startSelect.style.display = "block";
@@ -205,30 +269,8 @@ let startGame = async () => {
             levelLoseSelect.textContent = `You completed the Game! You reached Level ${i+1}!`;
             break;
         } else { () => {
+            clearInterval(myInterval);
             return playerAnswer.forEach(playerAnswer.pop())};
         };
     };
-};
-
-var unmute = document.getElementById('start');
-unmute.addEventListener('click', unlock());
-
-function unlock() {
-  console.log("unlocking")
-  // create empty buffer and play it
-  var buffer = context.createBuffer(1, 1, 22050);
-  var source = context.createBufferSource();
-  source.buffer = buffer;
-  source.connect(context.destination);
-
-  // play the file. noteOn is the older version of start()
-  source.start ? source.start(0) : source.noteOn(0);
-
-  // by checking the play state after some time, we know if we're really unlocked
-  setTimeout(function() {
-    if((source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE)) {
-      // Hide the unmute button if the context is unlocked.
-      unmute.style.display = "none";
-    }
-  }, 0)
-};
+}

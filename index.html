@@ -11,13 +11,13 @@
 <body>
     
     <h1 id="level-title" class="title">Press Button to Start <img src="./images/infosvg.svg" alt="info icon" class="info" type="button"></h1>
-    <h2 id="instruction" class="title instruction-size">You can click on the buttons or press the corresponding keys.</h2>
-    <div class="description" type="button">This mini-project was from Angela Yu's course in Udemy.com. It was supposed to be done with JQuery but I decided to try it with vanilla javascript and test what I learned from JavaScript. I did not look at the solution from the course and I tried to solve it. I've had problems concerning how JavaScript can't "wait" for a user response but found a clunky solution online with await and async functions. <div style="text-align: center; padding-top: 5px;">Click here to close</div></div>
+    <h2 id="instruction" class="title instruction-size">You can click on the buttons.</h2>
+    <div class="description" type="button">This mini-project was from Angela Yu's course in Udemy.com. It was supposed to be done with JQuery but I decided to try it with vanilla JavaScript and test what I learned from JavaScript. I did not look at the solution from the course and tried to solve it. I've had a problem concerning how JavaScript can't "wait" for a user response but found a clunky solution online with await and async functions. There is also a problem with iOS not playing sounds. <div style="text-align: center; padding-top: 5px;">Click here to close</div></div>
     <h1 id="level-lose"></h1>
     <button type="button" id="start" class="btn" onclick="startGame()">Start Game</button>
 
     <div class="container">
-      <div class="timer-bar">Under testing</div>
+      <div class="timer-bar"><p class="timer-text"></p></div>
       <div class="row">
 
         <div type="button" id="green" class="btn green">
