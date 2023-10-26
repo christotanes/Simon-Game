@@ -123,7 +123,7 @@ to {
 
 @keyframes slideFromLeft {
   from {
-    transform: translateX(-300px);
+    transform: translateX(-500px);
   }
   to {
     transform: translateX(0);
