@@ -25,12 +25,15 @@ const green = 1,
     infoSelect = document.querySelector('.info');
 
 // Will show description
-infoSelect.addEventListener('click', (e) => {
+infoSelect.addEventListener('click', () => {
     document.querySelector('.description').style.display = "block";
+    document.querySelector('.description').style.animationName = "slideFromLeft";
 });
 // And hide description
-document.querySelector('.description').addEventListener('click', (e) => {
-    document.querySelector('.description').style.display = "none";
+document.querySelector('.description').addEventListener('click', () => {
+    document.querySelector('.description').style.animationName = "disappear";
+    setTimeout(() => document.querySelector('.description').style.display = "none", 1400);
+    
 });
 
 // Lists of functions when a specifc color gets pressed
@@ -181,6 +184,7 @@ let startGame = async () => {
 
         // If statement will check both arrays in strings and see if will loop again or show player GameOver with level reached in i+1
         if (correctSequence.toString() != playerAnswer.toString()) {
+            audioWrong.play();
             containerSelect.style.display = "none";
             document.querySelector('.instruction-size').style.display = "none";
             startSelect.style.display = "block";
