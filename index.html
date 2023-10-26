@@ -10,38 +10,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="./images/gamecontroller48.png">
     </head>
+
 <body>
-    <h1 id="level-title">Press Button to Start</h1>
-    <h1 id="level-lose"></h1>
     
+    <h1 id="level-title" class="title">Press Button to Start <img src="./images/infosvg.svg" alt="info icon" class="info" type="button"></h1>
+    <div class="description" type="button">This mini-project was from Angela Yu's course in Udemy.com. It was supposed to be done with JQuery but I decided to try it with vanilla javascript and test what I learned from JavaScript. I did not look at the solution from the course and I tried to solve it. I've had problems concerning how JS can "wait" for a user response but found a solution online with await and async functions.</div>
+    <h1 id="level-lose"></h1>
+    <h2 class="title instruction-size">You can click on the buttons or press the corresponding keys.</h2>
     <button type="button" id="start" class="btn" onclick="startGame()">Start Game</button>
+
     <div class="container">
       <div class="timer-bar"></div>
-    <div class="row">
+      <div class="row">
 
-      <div type="button" id="green" class="btn green">
-        <div id="wButton" class="playButton">W</div>
+        <div type="button" id="green" class="btn green">
+          <div id="wButton" class="playButton">W</div>
+        </div>
+        
 
+        <div type="button" id="red" class="btn red">
+          <div id="aButton" class="playButton">A</div>
+        </div>
       </div>
 
-      <div type="button" id="red" class="btn red">
-        <div id="aButton" class="playButton">A</div>
+      <div class="row">
+        <div type="button" id="yellow" class="btn yellow">
+            <div id="sButton" class="playButton" style="color: black">S</div>
+        </div>
+      
+        <div type="button" id="blue" class="btn blue">
+          <div id="dButton" class="playButton">D</div>
+        </div>
       </div>
+
     </div>
-
-    <div class="row">
-
-      <div type="button" id="yellow" class="btn yellow">
-        <div id="sButton" class="playButton" style="color: black">S</div>
-      </div>
-      <div type="button" id="blue" class="btn blue">
-        <div id="dButton" class="playButton">D</div>
-      </div>
-
-    </div>
-
-  </div>
   
+    <div class="footer">
+      <a href="https://christotanes.github.io/web-portfolio/">Chris Totanes</a> 2023 | For demonstration purposes only
+    </div>
+
     <script src="./script.js"></script>
 </body>
 </html>

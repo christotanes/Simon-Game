@@ -1,22 +1,37 @@
 console.log("Hello World");
 // This activity was supposed to be done with JQuery but I decided to try it with vanilla javascript. The solution from the course with JQuery was available but I did not watch or look into the code. I tried to solve it and researched some of the problems I encountered.
 
-let chosenColor; 
-let playerAnswer = [];
-let correctSequence = [];
-const green = 1;
-const red = 2;
-const yellow = 3;
-const blue = 4;
-const greenSelect = document.getElementById('green');
-const redSelect = document.getElementById('red');
-const yellowSelect = document.getElementById('yellow');
-const blueSelect = document.getElementById('blue');
-const audioGreen = new Audio ('./sounds/green.mp3')
-const audioRed = new Audio ('./sounds/red.mp3')
-const audioYellow = new Audio ('./sounds/yellow.mp3')
-const audioBlue = new Audio ('./sounds/blue.mp3')
-const audioWrong = new Audio ('./sounds/wrong.mp3')
+let chosenColor, 
+    playerAnswer = [], 
+    correctSequence = [];
+const green = 1, 
+    red = 2, 
+    yellow = 3, 
+    blue = 4, 
+    greenSelect = document.getElementById('green'), 
+    redSelect = document.getElementById('red'), 
+    yellowSelect = document.getElementById('yellow'), 
+    blueSelect = document.getElementById('blue'), 
+    audioGreen = new Audio ('./sounds/green.mp3'), 
+    audioRed = new Audio ('./sounds/red.mp3'), 
+    audioYellow = new Audio ('./sounds/yellow.mp3'), 
+    audioBlue = new Audio ('./sounds/blue.mp3'), 
+    audioWrong = new Audio ('./sounds/wrong.mp3'),
+    titleSelect = document.getElementById('level-title'),
+    containerSelect = document.querySelector('.container'),
+    startSelect = document.getElementById('start'),
+    levelLoseSelect = document.getElementById('level-lose'),
+    timerBarSelect = document.querySelector('.timer-bar'),
+    infoSelect = document.querySelector('.info');
+
+// Will show description
+infoSelect.addEventListener('click', (e) => {
+    document.querySelector('.description').style.display = "block";
+});
+// And hide description
+document.querySelector('.description').addEventListener('click', (e) => {
+    document.querySelector('.description').style.display = "none";
+});
 
 // Lists of functions when a specifc color gets pressed
 let greenSet = {
@@ -64,10 +79,10 @@ const sleep = (delaySeconds) => new Promise((resolve) => setTimeout(resolve, del
 
 // Starts Game
 let startGame = async () => {
-    document.querySelector('.container').style.display = "block";
-    document.getElementById('start').style.display = "none";
-    document.getElementById('level-title').style.display = "none";
-    document.getElementById('level-lose').style.color = "#FEF2BF";
+    containerSelect.style.display = "block";
+    startSelect.style.display = "none";
+    titleSelect.style.display = "none";
+    levelLoseSelect.style.color = "#FEF2BF";
     playerAnswer.length = 0;
     correctSequence.length = 0;
 
@@ -75,7 +90,7 @@ let startGame = async () => {
         console.log(i);
         
         // shows level or iteration of sequence   
-        document.getElementById('level-lose').textContent = `Level ${i+1}`;
+        levelLoseSelect.textContent = `Level ${i+1}`;
 
         // will roll for random number + 1 then insert to an array
         chosenColor = Math.floor(Math.random() * 4) + 1;
@@ -97,7 +112,7 @@ let startGame = async () => {
             blueSet.playBlue();
         };
 
-        document.querySelector('.timer-bar').style.animationName = "growCounter";
+        timerBarSelect.style.animationName = "growCounter";
 
         greenSelect.addEventListener("click", (event) => {
             event.stopImmediatePropagation();
@@ -157,26 +172,29 @@ let startGame = async () => {
         console.log(counterTime(i))
 
         await sleep(counterTime);
-        document.querySelector('.timer-bar').style.animationName = "";
-        document.querySelector('.timer-bar').style.animationDuration = "counterTime()";
+
+        timerBarSelect.style.animationName = "";
+        timerBarSelect.style.animationDuration = "counterTime()";
         console.log(playerAnswer);
         console.log(correctSequence.toString());
         console.log(playerAnswer.toString())
 
         // If statement will check both arrays in strings and see if will loop again or show player GameOver with level reached in i+1
         if (correctSequence.toString() != playerAnswer.toString()) {
-            document.querySelector('.container').style.display = "none";
-            document.getElementById('start').style.display = "block";
-            document.getElementById('level-title').style.display = "block";
-            document.getElementById('level-lose').style.color = "#f70505";
-            document.getElementById('level-lose').textContent = `Game Over! You reached Level ${i+1}!`;
+            containerSelect.style.display = "none";
+            document.querySelector('.instruction-size').style.display = "none";
+            startSelect.style.display = "block";
+            titleSelect.style.display = "block";
+            levelLoseSelect.style.color = "#f70505";
+            levelLoseSelect.textContent = `Game Over! You reached Level ${i+1}!`;
             break;
         } else if (correctSequence.toString() === playerAnswer.toString() && i === 25) {
-            document.querySelector('.container').style.display = "none";
-            document.getElementById('start').style.display = "block";
-            document.getElementById('level-title').style.display = "block";
-            document.getElementById('level-lose').style.color = "#f70505";
-            document.getElementById('level-lose').textContent = `You completed the Game! You reached Level ${i+1}!`;
+            containerSelect.style.display = "none";
+            document.querySelector('.instruction-size').style.display = "none";
+            startSelect.style.display = "block";
+            titleSelect.style.display = "block";
+            levelLoseSelect.style.color = "#f70505";
+            levelLoseSelect.textContent = `You completed the Game! You reached Level ${i+1}!`;
             break;
         } else { () => {
             return playerAnswer.forEach(playerAnswer.pop())};

@@ -1,16 +1,36 @@
 * {
   font-family: 'Tilt Neon', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   text-align: center;
   background-color: #011F3F;
+  color: #FEF2BF;
+  min-height: 100vh;
 }
 
 #level-title, .playButton {
   font-size: 3rem;
-  margin:  5%;
-  color: #FEF2BF;
+  margin:  2rem 5%;
+}
+
+.instruction-size {
+  font-size: 1rem;
+}
+
+.description {
+  display: none;
+  position: absolute;
+  left: 1%;
+  top: 1%;
+  width: 20%;
+  background-color: #065ab4c6;
+  border-radius: 10px;
+  text-align: left;
+  padding: 10px;
 }
 
 .playButton{
@@ -19,14 +39,14 @@ body {
 
 #level-lose {
   font-size: 4rem;
-  margin:  5%;
+  margin:  2rem 5%;
   color: #f70505;
 }
 
 .container {
   display: none;
   width: 50%;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .btn {
@@ -87,4 +107,12 @@ to {
   background-color: #f70505;
   
   animation-duration: 20s;
+  animation-timing-function: linear;
+}
+
+.footer { 
+  margin-top: auto 0 0 0;
+  text-align: center;
+  background-color: rgba(75, 75, 75, 0.807);
+  color:antiquewhite;
 }
