@@ -26,9 +26,9 @@ const green = 1,
     infoSelect = document.querySelector('.info');
 
 // code to allow audio to play on iOS without user interaction
-const soundEffect = new Audio();
-soundEffect.autoplay = true;
-soundEffect.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+// const soundEffect = new Audio();
+// soundEffect.autoplay = true;
+// soundEffect.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
     
 // Will show description
 infoSelect.addEventListener('click', () => {
@@ -93,10 +93,12 @@ let startGame = async () => {
     titleSelect.style.display = "none";
     levelLoseSelect.style.color = "#FEF2BF";
     document.getElementById('instruction').style.display = "none";
-    greenSet.muted = !greenSet.muted;
-    redSet.muted = !redSet.muted;
-    yellowSet.muted = !yellowSet.muted;
-    blueSet.muted = !blueSet.muted;
+
+    // for iOS audio setting
+    // greenSet.muted = !greenSet.muted;
+    // redSet.muted = !redSet.muted;
+    // yellowSet.muted = !yellowSet.muted;
+    // blueSet.muted = !blueSet.muted;
     playerAnswer.length = 0;
     correctSequence.length = 0;
 
@@ -142,20 +144,20 @@ let startGame = async () => {
           
         await sleep(1);
         if (correctSequence[i] == green) {
-            // greenSet.playGreen();
-            soundEffect.src = "./sounds/green.mp3";
+            greenSet.playGreen();
+            // soundEffect.src = "./sounds/green.mp3";
         } else if (correctSequence[i] == red) {
-            // redSet.playRed();
-            soundEffect.src = "./sounds/red.mp3";
+            redSet.playRed();
+            // soundEffect.src = "./sounds/red.mp3";
         } else if (correctSequence[i] == yellow) {
-            // yellowSet.playYellow();
-            soundEffect.src = "./sounds/yellow.mp3";
+            yellowSet.playYellow();
+            // soundEffect.src = "./sounds/yellow.mp3";
         } else if (correctSequence[i] == blue) {
-            // blueSet.playBlue();
-            soundEffect.src = "./sounds/blue.mp3";
+            blueSet.playBlue();
+            // soundEffect.src = "./sounds/blue.mp3";
         };
 
-        let myInterval = setInterval(function countdownTimer() {
+        let timerInterval = setInterval(function countdownTimer() {
             countdown -= 1;
             document.querySelector('.timer-text').textContent = countdown;
             console.log(countdown);
@@ -211,13 +213,15 @@ let startGame = async () => {
 
         await sleep(earlyCounter);
         if (playerAnswer.length != i+1 && playerAnswer.length != 0 && correctSequence.toString() === playerAnswer.toString()){
-            clearInterval(myInterval);
+            document.querySelector('.timer-text').textContent = "";
+            clearInterval(timerInterval);
             audioCorrect.play();
             console.log(playerAnswer);
             timerBarSelect.style.animationName = "";
             continue;
         } else if (correctSequence.toString() === playerAnswer.toString()) {
-            clearInterval(myInterval);
+            document.querySelector('.timer-text').textContent = "";
+            clearInterval(timerInterval);
             audioCorrect.play();
             console.log(playerAnswer);
             timerBarSelect.style.animationName = "";
@@ -225,7 +229,8 @@ let startGame = async () => {
         } else if (playerAnswer.length == 0){
             console.log("Must continue");
         } else if (correctSequence.toString() != playerAnswer.toString()) {
-            clearInterval(myInterval);
+            document.querySelector('.timer-text').textContent = "";
+            clearInterval(timerInterval);
             audioWrong.play();
             console.log(playerAnswer);
             containerSelect.style.display = "none";
@@ -241,6 +246,7 @@ let startGame = async () => {
         };
 
         await sleep(counterTime);
+        document.querySelector('.timer-text').textContent = "";
         timerBarSelect.style.animationName = "";
         console.log(playerAnswer);
         console.log(correctSequence.toString());
@@ -248,7 +254,8 @@ let startGame = async () => {
 
         // If statement will check both arrays in strings and see if will loop again or show player GameOver with level reached in i+1
         if (correctSequence.toString() != playerAnswer.toString()) {
-            clearInterval(myInterval);
+            document.querySelector('.timer-text').textContent = "";
+            clearInterval(timerInterval);
             audioWrong.play();
             containerSelect.style.display = "none";
             document.querySelector('.instruction-size').style.display = "none";
@@ -259,7 +266,8 @@ let startGame = async () => {
             levelLoseSelect.textContent = `Game Over! You reached Level ${i+1}!`;
             break;
         } else if (correctSequence.toString() === playerAnswer.toString() && i === 25) {
-            clearInterval(myInterval);
+            document.querySelector('.timer-text').textContent = "";
+            clearInterval(timerInterval);
             containerSelect.style.display = "none";
             document.querySelector('.instruction-size').style.display = "none";
             startSelect.style.display = "block";
@@ -269,7 +277,8 @@ let startGame = async () => {
             levelLoseSelect.textContent = `You completed the Game! You reached Level ${i+1}!`;
             break;
         } else { () => {
-            clearInterval(myInterval);
+            document.querySelector('.timer-text').textContent = "";
+            clearInterval(timerInterval);
             return playerAnswer.forEach(playerAnswer.pop())};
         };
     };
