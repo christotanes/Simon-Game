@@ -30,8 +30,8 @@ body {
 .description {
   display: none;
   position: absolute;
-  left: 1%;
-  top: 1%;
+  left: 2%;
+  top: 5%;
   width: 30vw;
   background-color: #065ab4c6;
   border-radius: 10px;
