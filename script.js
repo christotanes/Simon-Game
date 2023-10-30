@@ -31,7 +31,6 @@ document.querySelector('.description').addEventListener('click', () => {
 
 function gameOver() {
     correctSequence.length = 0;
-    level = 1;
     document.querySelector('body').setAttribute ('class', 'game-over');
     setTimeout(() =>document.querySelector('body').removeAttribute ('class'), 100);
     const audioWrong = new Audio('./sounds/wrong.mp3');
@@ -142,6 +141,7 @@ function checkAnswer() {
 };
 
 startSelect.addEventListener('click', () => {
+    level = 1;
     containerSelect.style.display = "block";
     startSelect.style.display = "none";
     titleSelect.style.display = "none";
